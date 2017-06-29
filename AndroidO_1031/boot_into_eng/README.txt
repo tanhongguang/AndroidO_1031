@@ -1,0 +1,1 @@
+bootable/bootloader/lk/app/aboot/aboot.csystem/core/rootdir/init.rc
