@@ -1,0 +1,49 @@
+
+
+allow gree_init self:capability { chown dac_override fowner fsetid setgid setuid };
+
+allow gree_init property_socket:sock_file write;
+allow gree_init init:unix_stream_socket connectto;
+allow gree_init radio_prop:property_service set;
+
+allow gree_init persist_file:dir w_dir_perms;
+allow gree_init persist_file:file create_file_perms;
+
+allow gree_init persist_bluetooth_file:dir w_dir_perms;
+allow gree_init persist_bluetooth_file:file create_file_perms;
+
+allow gree_init block_device:blk_file rw_file_perms;
+allow gree_init block_device:dir w_dir_perms;
+
+allow gree_init system_prop:property_service set;
+allow gree_init { system_file rootfs shell_exec }:file execute_no_trans;
+
+read_logd( RIDL );
+unix_socket_connect(gree_init, logdr, logd)
+
+allow gree_init self:capability2 syslog;
+allow gree_init kernel:system {syslog_mod syslog_read};
+
+# allow access to /storage/ for sdcard
+allow gree_init storage_file:dir create_dir_perms;
+allow gree_init storage_file:file create_file_perms;
+allow gree_init storage_file:lnk_file { create read unlink };
+
+allow gree_init storage_stub_file:dir create_dir_perms;
+allow gree_init storage_stub_file:file create_file_perms;
+
+allow gree_init mnt_user_file:dir create_dir_perms;
+allow gree_init mnt_user_file:file create_file_perms;
+allow gree_init mnt_user_file:lnk_file { create read unlink };
+
+allow gree_init fuse:dir create_dir_perms;
+allow gree_init fuse:file create_file_perms;
+
+allow gree_init shell_exec:file {execute read open};
+
+# allow print log to kernel
+allow gree_init kmsg_device:chr_file rw_file_perms;
+
+#allow bootinfo to boot_init
+allow gree_init gree_init_data_file:file {create rw_file_perms};
+allow gree_init gree_init_data_file:dir {search write add_name};
